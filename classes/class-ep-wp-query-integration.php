@@ -18,11 +18,6 @@ class EP_WP_Query_Integration {
 
 	public function setup() {
 
-		// Ensure we aren't on the admin (unless overridden)
-		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
-			return;
-		}
-
 		// Ensure that we are currently allowing ElasticPress to override the normal WP_Query search
 		if ( ! ep_is_activated() ) {
 			return;
@@ -55,6 +50,11 @@ class EP_WP_Query_Integration {
 	}
 
 	public function action_pre_get_posts( $query ) {
+		// Ensure we aren't on the admin (unless overridden)
+		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+			return;
+		}
+
 		if ( ! ep_elasticpress_enabled( $query ) || apply_filters( 'ep_skip_query_integration', false, $query ) ) {
 			return;
 		}
@@ -69,6 +69,12 @@ class EP_WP_Query_Integration {
 	 * @since 0.9
 	 */
 	public function action_the_post( $post ) {
+
+		// Ensure we aren't on the admin (unless overridden)
+		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+			return;
+		}
+
 		if ( ! is_multisite() ) {
 			return;
 		}
@@ -85,7 +91,7 @@ class EP_WP_Query_Integration {
 			restore_current_blog();
 
 			switch_to_blog( $post->site_id );
-			
+
 			remove_action( 'the_post', array( $this, 'action_the_post' ), 10, 1 );
 			setup_postdata( $post );
 			add_action( 'the_post', array( $this, 'action_the_post' ), 10, 1 );
@@ -99,6 +105,11 @@ class EP_WP_Query_Integration {
 	 * @since 0.9.2
 	 */
 	public function action_loop_start( $query ) {
+		// Ensure we aren't on the admin (unless overridden)
+		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+			return;
+		}
+
 		if ( ! is_multisite() ) {
 			return;
 		}
@@ -112,6 +123,11 @@ class EP_WP_Query_Integration {
 	 * @since 0.9
 	 */
 	public function action_loop_end( $query ) {
+		// Ensure we aren't on the admin (unless overridden)
+		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+			return;
+		}
+
 		if ( ! is_multisite() ) {
 			return;
 		}
@@ -135,6 +151,11 @@ class EP_WP_Query_Integration {
 	 * @return array
 	 */
 	public function filter_the_posts( $posts, &$query ) {
+		// Ensure we aren't on the admin (unless overridden)
+		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+			return;
+		}
+
 		if ( ! ep_elasticpress_enabled( $query ) || apply_filters( 'ep_skip_query_integration', false, $query )  ) {
 			return $posts;
 		}
@@ -200,6 +221,11 @@ class EP_WP_Query_Integration {
 	 * @return string
 	 */
 	public function filter_found_posts_query( $sql, $query ) {
+		// Ensure we aren't on the admin (unless overridden)
+		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+			return;
+		}
+
 		if ( ! ep_elasticpress_enabled( $query ) || apply_filters( 'ep_skip_query_integration', false, $query )  ) {
 			return $sql;
 		}
@@ -216,6 +242,11 @@ class EP_WP_Query_Integration {
 	 * @return string
 	 */
 	public function filter_posts_request( $request, $query ) {
+		// Ensure we aren't on the admin (unless overridden)
+		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+			return;
+		}
+
 		if ( ! ep_elasticpress_enabled( $query ) || apply_filters( 'ep_skip_query_integration', false, $query ) ) {
 			return $request;
 		}
