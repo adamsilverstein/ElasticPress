@@ -16,6 +16,16 @@ class EP_WP_Query_Integration {
 	 */
 	public function __construct() { }
 
+	/**
+	 * Ensure we aren't on the admin (unless overridden).
+	 *
+	 * @return boolean True if is_admin true and ep_admin_wp_query_integration returns false.
+	 */
+	public static function is_admin() {
+		return ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) );
+	}
+
+
 	public function setup() {
 
 		// Ensure that we are currently allowing ElasticPress to override the normal WP_Query search
@@ -50,8 +60,8 @@ class EP_WP_Query_Integration {
 	}
 
 	public function action_pre_get_posts( $query ) {
-		// Ensure we aren't on the admin (unless overridden)
-		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+
+		if ( self::is_admin() ) {
 			return;
 		}
 
@@ -70,8 +80,7 @@ class EP_WP_Query_Integration {
 	 */
 	public function action_the_post( $post ) {
 
-		// Ensure we aren't on the admin (unless overridden)
-		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+		if ( self::is_admin() ) {
 			return;
 		}
 
@@ -105,8 +114,7 @@ class EP_WP_Query_Integration {
 	 * @since 0.9.2
 	 */
 	public function action_loop_start( $query ) {
-		// Ensure we aren't on the admin (unless overridden)
-		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+		if ( self::is_admin() ) {
 			return;
 		}
 
@@ -123,8 +131,7 @@ class EP_WP_Query_Integration {
 	 * @since 0.9
 	 */
 	public function action_loop_end( $query ) {
-		// Ensure we aren't on the admin (unless overridden)
-		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+		if ( self::is_admin() ) {
 			return;
 		}
 
@@ -151,8 +158,7 @@ class EP_WP_Query_Integration {
 	 * @return array
 	 */
 	public function filter_the_posts( $posts, &$query ) {
-		// Ensure we aren't on the admin (unless overridden)
-		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+		if ( self::is_admin() ) {
 			return;
 		}
 
@@ -221,8 +227,7 @@ class EP_WP_Query_Integration {
 	 * @return string
 	 */
 	public function filter_found_posts_query( $sql, $query ) {
-		// Ensure we aren't on the admin (unless overridden)
-		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+		if ( self::is_admin() ) {
 			return;
 		}
 
@@ -242,8 +247,7 @@ class EP_WP_Query_Integration {
 	 * @return string
 	 */
 	public function filter_posts_request( $request, $query ) {
-		// Ensure we aren't on the admin (unless overridden)
-		if ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) ) {
+		if ( self::is_admin() ) {
 			return;
 		}
 
