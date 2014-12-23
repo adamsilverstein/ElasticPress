@@ -25,7 +25,6 @@ class EP_WP_Query_Integration {
 		return ( is_admin() && ! apply_filters( 'ep_admin_wp_query_integration', false ) );
 	}
 
-
 	public function setup() {
 
 		// Ensure that we are currently allowing ElasticPress to override the normal WP_Query search
