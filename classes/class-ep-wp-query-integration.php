@@ -19,6 +19,7 @@ class EP_WP_Query_Integration {
 	/**
 	 * Ensure we aren't on the admin (unless overridden).
 	 *
+	 * @since 1.2.1
 	 * @return boolean True if is_admin true and ep_admin_wp_query_integration returns false.
 	 */
 	public static function is_admin() {
